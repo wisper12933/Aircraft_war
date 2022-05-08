@@ -1,0 +1,41 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+Main .right.> PlayerDao
+PlayerDaoImpl .up.|> PlayerDao
+PlayerDaoImpl -left-> Player
+
+class Main
+
+interface PlayerDao{
+    + getAllInformation():List<Player>
+    + doAdd(Player player):void
+    + doDelete(String date):void
+    + doSort():void
+}
+
+class PlayerDaoImpl{
+    - ranks:List<Player>
+    + PlayerDaoImpl():void
+    + getAllInformation():List<Player>
+    + doAdd(Player player):void
+    + doDelete(String date):void
+    + doSort():void
+    + getNum():int
+}
+
+class Player{
+    - playerID:int
+    - score:int
+    - playerName:String
+    - playDate:String
+    + Player(int playerID, int score, String playerName, String playDate):void
+    + getPlayerID():int
+    + getScore():int
+    + getPlayerName():String
+    + getPlayDate():String
+}
+
+
+
+@enduml

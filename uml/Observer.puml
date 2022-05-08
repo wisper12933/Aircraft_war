@@ -1,0 +1,73 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+class Game
+
+Game ..> BombSupply
+BombSupply o-down-> AbstractFlyingObject
+AbstractAircraft -up-|> AbstractFlyingObject
+AbstractBullet -up-|> AbstractFlyingObject
+EnemyAircraft -up-|> AbstractAircraft
+EnemyBullet -up-|> AbstractBullet
+MobEnemy -up-|> EnemyAircraft
+EliteEnemy -up-|> EnemyAircraft
+BossEnemy -up-|> EnemyAircraft
+
+abstract class AbstractFlyingObject
+
+abstract class AbstractAircraft
+
+abstract class EnemyAircraft
+
+abstract class AbstractBullet
+
+class BombSupply {
+    - flyingObjectList:List<AbstractFlyingObject>
+    + BombSupply(int locationX, int locationY, int speedX, int speedY):void
+    + addObject(AbstractFlyingObject flyingObject):void
+    + callAll():void
+    + executeBomb(Game game):void
+}
+
+class MobEnemy {
+    + MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp):void
+    + forward():void
+    + shoot():List<AbstractBullet>
+    + bonus():AbstractSupply
+    + upgrade():void
+}
+
+class EliteEnemy {
+    - shootNum:int
+    - power:int
+    - direction:int
+    + isHard:boolean
+    + EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp):void
+    + forward():void
+    + shoot():List<AbstractBullet>
+    + bonus():AbstractSupply
+    + upgrade():void
+}
+
+class BossEnemy {
+    - shootNum:int
+    - propNum:int
+    - power:int
+    - direction:int
+    - bombPower:int
+    + BossEnemy(int locationX, int locationY, int speedX, int speedY, int hp):void
+    + getPropNum():int
+    + forward():void
+    + shoot():List<AbstractBullet>
+    + bonus():AbstractSupply
+    + upgrade():void
+}
+
+class EnemyBullet {
+    + EnemyBullet(int locationX, int locationY,
+     int speedX, int speedY, int power):void
+    + upgrade():void
+}
+
+
+@enduml

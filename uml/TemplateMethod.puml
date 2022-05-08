@@ -1,0 +1,35 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+abstract class Game{
+    + Game():void
+    + action():void
+    + {abstract} difficultUpgrade():void
+    + {abstract} heroShootRate():boolean
+}
+
+Easy -up-|> Game
+
+Medium -up-|> Game
+
+Hard -up-|> Game
+
+class Easy{
+    + Easy():void
+    + difficultUpgrade():void
+    + heroShootRate():boolean
+}
+
+class Medium{
+    + Medium():void
+    + difficultUpgrade():void
+    + heroShootRate():boolean
+}
+
+class Hard{
+    + Hard():void
+    + difficultUpgrade():void
+    + heroShootRate():boolean
+}
+
+@enduml

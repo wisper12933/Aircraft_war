@@ -1,0 +1,49 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+BossShoot .up.|> ShootStrategy
+MobShoot .up.|> ShootStrategy
+StraightShoot .up.|> ShootStrategy
+ScatteredShoot .up.|> ShootStrategy
+BossEnemy ..> Context
+MobEnemy ..> Context
+EliteEnemy ..> Context
+HeroAircraft ..> Context
+Context o--> ShootStrategy
+
+interface ShootStrategy{
+    + ballistic(AbstractAircraft aircraft,int direction,int shootNum,int power):List<AbstractBullet>
+}
+
+class BossShoot{
+    + ballistic(AbstractAircraft aircraft,int direction,int shootNum,int power):List<AbstractBullet>
+}
+
+class MobShoot{
+    + ballistic(AbstractAircraft aircraft,int direction,int shootNum,int power):List<AbstractBullet>
+}
+
+class ScatteredShoot{
+    + ballistic(AbstractAircraft aircraft,int direction,int shootNum,int power):List<AbstractBullet>
+}
+
+class StraightShoot{
+    + ballistic(AbstractAircraft aircraft,int direction,int shootNum,int power):List<AbstractBullet>
+}
+
+class Context{
+    - shootStrategy:ShootStrategy
+    + Context(ShootStrategy shootStrategy):void
+    + setShootStrategy(ShootStrategy shootStrategy):void
+    + executeShootStrategy(AbstractAircraft aircraft, int direction, int shootNum, int power):List<AbstractBullet>
+}
+
+class BossEnemy
+
+class EliteEnemy
+
+class MobEnemy
+
+class HeroAircraft
+
+@enduml

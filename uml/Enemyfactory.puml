@@ -1,0 +1,116 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Game{}
+
+Game ..> AbstractFlyingObject
+Game ..> AbstractFactory
+AbstractFlyingObject <|-- AbstractAircraft
+AbstractAircraft <|-- EnemyAircraft
+EnemyAircraft <|-- MobEnemy
+EnemyAircraft <|-- EliteEnemy
+EnemyAircraft <|-- BossEnemy
+AbstractFactory <|-- EnemyFactory
+AbstractFactory <|-- BossFactory
+EnemyFactory ..> MobEnemy
+EnemyFactory ..> EliteEnemy
+BossFactory ..> BossEnemy
+
+
+abstract class AbstractFlyingObject
+{
+    # locationX:int
+    # locationY:int
+    # speedX:int
+    # speedY:int
+    # image:BufferedImage
+    # width:int
+    # height:int
+    # isValid:boolean
+
+    + FlyingObject(int locationX, int locationY, int speedX, int speedY):void
+    + forward():void
+    + crash(FlyingObject flyingObject):boolean
+    + setLocation(double locationX, double locationY):void
+    + getLocationX():int
+    + getLocationY():int
+    + getSpeedY():int
+    + getImage():BufferedImage
+    + getWidth():int
+    + getHeight():int
+    + notValid():boolean
+    + vanish():void
+    + upgrade():void
+}
+
+abstract class AbstractAircraft
+{
+	# maxHp:int
+    # hp:int
+    + AbstractAircraft(int locationX, int locationY, int speedX, int speedY, int hp):void
+    + decreaseHp(int decrease):void
+    + increaseHp(int increase):void
+    + getHp():int
+    + getMaxHp():int
+    + setHp(int setHp):void
+    + {abstract} shoot():List<Bullet>
+ }
+
+abstract class AbstractFactory
+{
+    + produceObject(String type, EnemyAircraft enemy):AbstractFlyingObject
+    + {abstract} createObject(String type, EnemyAircraft enemy):AbstractFlyingObject
+}
+
+abstract class EnemyAircraft
+{
+    + EnemyAircraft(int locationX, int locationY, int speedX, int speedY, int hp):void
+    + shoot():List<AbstractBullet>
+    + {abstract} }bonus():AbstractSupply
+}
+
+class EnemyFactory {
+    + upgradeEliteHp:int
+    + upgradeMobSpeed:int
+    + createObject(String type, EnemyAircraft enemy):AbstractFlyingObject
+}
+
+class BossFactory {
+    + addHp:int
+    createObject(String type, EnemyAircraft enemy):AbstractFlyingObject
+}
+
+class MobEnemy {
+    + MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp):void
+    + forward():void
+    + shoot():List<AbstractBullet>
+    + bonus():AbstractSupply
+    + upgrade():void
+}
+
+class EliteEnemy {
+    - shootNum:int
+    - power:int
+    - direction:int
+    + isHard:boolean
+    + EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp):void
+    + forward():void
+    + shoot():List<AbstractBullet>
+    + bonus():AbstractSupply
+    + upgrade():void
+}
+
+class BossEnemy {
+    - shootNum:int
+    - propNum:int
+    - power:int
+    - direction:int
+    - bombPower:int
+    + BossEnemy(int locationX, int locationY, int speedX, int speedY, int hp):void
+    + getPropNum():int
+    + forward():void
+    + shoot():List<AbstractBullet>
+    + bonus():AbstractSupply
+    + upgrade():void
+}
+@enduml

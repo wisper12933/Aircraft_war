@@ -1,0 +1,165 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+abstract class AbstractFlyingObject
+{
+    # locationX:int
+    # locationY:int
+    # speedX:int
+    # speedY:int
+    # image:BufferedImage
+    # width:int
+    # height:int
+    # isValid:boolean
+
+    + FlyingObject(int locationX, int locationY, int speedX, int speedY):void
+    + forward():void
+    + crash(FlyingObject flyingObject):boolean
+    + setLocation(double locationX, double locationY):void
+    + getLocationX():int
+    + getLocationY():int
+    + getSpeedY():int
+    + getImage():BufferedImage
+    + getWidth():int
+    + getHeight():int
+    + notValid():boolean
+    + vanish():void
+    + upgrade():void
+}
+
+abstract class AbstractAircraft
+{
+	# maxHp:int
+    # hp:int
+    + AbstractAircraft(int locationX, int locationY, int speedX, int speedY, int hp):void
+    + decreaseHp(int decrease):void
+    + increaseHp(int increase):void
+    + getHp():int
+    + getMaxHp():int
+    + setHp(int setHp):void
+    + {abstract} shoot():List<Bullet>
+}
+
+abstract class EnemyAircraft
+{
+    + EnemyAircraft(int locationX, int locationY, int speedX, int speedY, int hp):void
+    + shoot():List<AbstractBullet>
+    + bonus():AbstractSupply
+}
+
+abstract class AbstractBullet
+{
+    - power:int
+    + AbstractBullet(int locationX, int locationY, int speedX, int speedY, int power):void
+    + forward():void
+	+ getPower():int
+}
+
+abstract class AbstractSupply
+{
+    + AbstractSupply(int locationX, int locationY, int speedX, int speedY, int power):void
+    + forward():void
+}
+
+AbstractFlyingObject <|-- AbstractAircraft
+AbstractFlyingObject <|-- AbstractBullet
+AbstractFlyingObject <|-- AbstractSupply
+
+AbstractAircraft <|-- HeroAircraft
+AbstractAircraft <|-- EnemyAircraft
+
+EnemyAircraft <|-- MobEnemy
+EnemyAircraft <|-- EliteEnemy
+EnemyAircraft <|-- BossEnemy
+
+AbstractBullet <|-- HeroBullet
+AbstractBullet <|-- EnemyBullet
+
+AbstractSupply <|-- HpSupply
+AbstractSupply <|-- FireSupply
+AbstractSupply <|-- BombSupply
+
+class HeroAircraft {
+    - shootNum:int
+    - shootMax:int
+    - shootMin:int
+    - shootMode:false
+    - power:int
+    - direction:int
+    + HeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp):void
+    + getInstance():HeroAircraft
+    + getShootNum:int
+    + increaseShootNum:void
+    + decreaseShootNum:void
+    + changeScatterMode():void
+    + changeStraightMode():void
+    + forward():void
+    + shoot():List<AbstractBullet>
+}
+
+class MobEnemy {
+    + MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp):void
+    + forward():void
+    + shoot():List<AbstractBullet>
+    + bonus():AbstractSupply
+    + upgrade():void
+}
+
+class EliteEnemy {
+    - shootNum:int
+    - power:int
+    - direction:int
+    + isHard:boolean
+    + EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp):void
+    + forward():void
+    + shoot():List<AbstractBullet>
+    + bonus():AbstractSupply
+    + upgrade():void
+}
+
+class BossEnemy {
+    - shootNum:int
+    - propNum:int
+    - power:int
+    - direction:int
+    - bombPower:int
+    + BossEnemy(int locationX, int locationY, int speedX, int speedY, int hp):void
+    + getPropNum():int
+    + forward():void
+    + shoot():List<AbstractBullet>
+    + bonus():AbstractSupply
+    + upgrade():void
+}
+
+class HeroBullet {
+    + HeroBullet(int locationX, int locationY,
+     int speedX, int speedY, int power):void
+    + upgrade():void
+}
+
+class EnemyBullet {
+    + EnemyBullet(int locationX, int locationY,
+     int speedX, int speedY, int power):void
+    + upgrade():void
+}
+
+class HpSupply {
+    + HpSupply(int locationX, int locationY, int speedX, int speedY):void
+    + executeHp(HeroAircraft heroAircraft):void
+}
+
+class FireSupply {
+    + FireSupply(int locationX, int locationY, int speedX, int speedY):void
+    + executeFire(HeroAircraft heroAircraft):void
+    + executeIncreaseFire(HeroAircraft heroAircraft):void
+    + executeDecreaseFire(HeroAircraft heroAircraft):void
+}
+
+class BombSupply {
+    - flyingObjectList:List<AbstractFlyingObject>
+    + BombSupply(int locationX, int locationY, int speedX, int speedY):void
+    + addObject(AbstractFlyingObject flyingObject):void
+    + callAll():void
+    + executeBomb(Game game):void
+}
+@enduml

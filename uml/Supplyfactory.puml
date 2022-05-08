@@ -1,0 +1,93 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Game{}
+
+Game ..> AbstractFlyingObject
+Game ..> EliteEnemy
+EliteEnemy ..> AbstractFactory
+AbstractFlyingObject <|-- AbstractSupply
+AbstractSupply <|-- HpSupply
+AbstractSupply <|-- FireSupply
+AbstractSupply <|-- BombSupply
+AbstractFactory <|-- SupplyFactory
+SupplyFactory ..> HpSupply
+SupplyFactory ..> FireSupply
+SupplyFactory ..> BombSupply
+
+abstract class AbstractFlyingObject
+{
+    # locationX:int
+    # locationY:int
+    # speedX:int
+    # speedY:int
+    # image:BufferedImage
+    # width:int
+    # height:int
+    # isValid:boolean
+
+    + FlyingObject(int locationX, int locationY, int speedX, int speedY):void
+    + forward():void
+    + crash(FlyingObject flyingObject):boolean
+    + setLocation(double locationX, double locationY):void
+    + getLocationX():int
+    + getLocationY():int
+    + getSpeedY():int
+    + getImage():BufferedImage
+    + getWidth():int
+    + getHeight():int
+    + notValid():boolean
+    + vanish():void
+    + upgrade():void
+}
+
+abstract class AbstractFactory
+{
+    + produceObject(String type, EnemyAircraft enemy):AbstractFlyingObject
+    + {abstract} createObject(String type, EnemyAircraft enemy):AbstractFlyingObject
+}
+
+class AbstractSupply {
+    + AbstractSupply(int locationX, int locationY, int speedX, int speedY, int power):void
+    + forward():void
+}
+
+class HpSupply{
+    + HpSupply(int locationX, int locationY, int speedX, int speedY):void
+    + executeHp(HeroAircraft heroAircraft):void
+}
+
+class FireSupply{
+    + FireSupply(int locationX, int locationY, int speedX, int speedY):void
+    + executeFire(HeroAircraft heroAircraft):void
+    + executeIncreaseFire(HeroAircraft heroAircraft):void
+    + executeDecreaseFire(HeroAircraft heroAircraft):void
+}
+
+class BombSupply{
+    - flyingObjectList:List<AbstractFlyingObject>
+    + BombSupply(int locationX, int locationY, int speedX, int speedY):void
+    + addObject(AbstractFlyingObject flyingObject):void
+    + callAll():void
+    + executeBomb(Game game):void
+}
+
+class SupplyFactory{
+    + createObject(String type, EnemyAircraft enemy):AbstractFlyingObject
+}
+
+class EliteEnemy {
+    - shootNum:int
+    - power:int
+    - direction:int
+    + isHard:boolean
+    + EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp):void
+    + forward():void
+    + shoot():List<AbstractBullet>
+    + bonus():AbstractSupply
+    + upgrade():void
+}
+
+
+
+@enduml

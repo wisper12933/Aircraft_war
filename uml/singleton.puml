@@ -1,0 +1,70 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Game{}
+
+AbstractFlyingObject <|-- AbstractAircraft
+AbstractAircraft <|-- HeroAircraft
+Game -right-> HeroAircraft
+HeroAircraft --> HeroAircraft
+
+
+abstract class AbstractFlyingObject
+{
+    # locationX:int
+    # locationY:int
+    # speedX:int
+    # speedY:int
+    # image:BufferedImage
+    # width:int
+    # height:int
+    # isValid:boolean
+
+    + FlyingObject(int locationX, int locationY, int speedX, int speedY):void
+    + forward():void
+    + crash(FlyingObject flyingObject):boolean
+    + setLocation(double locationX, double locationY):void
+    + getLocationX():int
+    + getLocationY():int
+    + getSpeedY():int
+    + getImage():BufferedImage
+    + getWidth():int
+    + getHeight():int
+    + notValid():boolean
+    + vanish():void
+    + upgrade():void
+}
+
+abstract class AbstractAircraft
+{
+	# maxHp:int
+    # hp:int
+    + AbstractAircraft(int locationX, int locationY, int speedX, int speedY, int hp):void
+    + decreaseHp(int decrease):void
+    + increaseHp(int increase):void
+    + getHp():int
+    + getMaxHp():int
+    + setHp(int setHp):void
+    + {abstract} shoot():List<Bullet>
+ }
+
+class HeroAircraft {
+    - shootNum:int
+    - shootMax:int
+    - shootMin:int
+    - shootMode:false
+    - power:int
+    - direction:int
+    + HeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp):void
+    + getInstance():HeroAircraft
+    + getShootNum:int
+    + increaseShootNum:void
+    + decreaseShootNum:void
+    + changeScatterMode():void
+    + changeStraightMode():void
+    + forward():void
+    + shoot():List<AbstractBullet>
+}
+
+
+@enduml
